@@ -16,11 +16,11 @@ WORKDIR /src
 COPY ["MvcShopApp.csproj", "./"]
 RUN dotnet restore "MvcShopApp.csproj" 
 COPY . .
-RUN dotnet build "MvcShopApp.csproj" -a arm64 -c Release -o /app/build
+RUN dotnet build "MvcShopApp.csproj"  -c Debug -o /app/build
 
 # Publish the application
 FROM build AS publish
-RUN dotnet publish "MvcShopApp.csproj" -a arm64 -c Release -o /app/publish
+RUN dotnet publish "MvcShopApp.csproj"  -c Debug -o /app/publish
 
 # Build runtime image
 FROM base AS final

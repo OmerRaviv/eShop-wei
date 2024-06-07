@@ -125,7 +125,7 @@ namespace MvcShopApp.Controllers
                     var serializedJson = JsonConvert.SerializeObject(buildApplyCouponRquest(model));
                     var content = new StringContent(serializedJson, Encoding.UTF8, "application/json");
 
-                    using var response = await _httpClient.PostAsync("http://coupon-django-api:8000/coupons/apply", content);
+                    using var response = await _httpClient.PostAsync("http://localhost:8000/coupons/apply", content);
                     if (response.IsSuccessStatusCode)
                     {
                         var responseBody = await response.Content.ReadAsStringAsync();

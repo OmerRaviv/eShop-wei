@@ -6,13 +6,12 @@ services:
       context: ./MvcShopApp
       dockerfile: ./Dockerfile
       args:
-        DD_TRACER: "https://artprodcus3.artifacts.visualstudio.com/A124c910c-3307-4c7f-b5dc-36cb208d4211/a51c4863-3eb4-4c5d-878a-58b41a049e4e/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2RhdGFkb2docS9wcm9qZWN0SWQvYTUxYzQ4NjMtM2ViNC00YzVkLTg3OGEtNThiNDFhMDQ5ZTRlL2J1aWxkSWQvMTU4Mjg4L2FydGlmYWN0TmFtZS8yLjUyLjAtcmVsZWFzZS1hcnRpZmFjdHM1/content?format=file&subPath=%2Fdatadog-dotnet-apm-2.52.0.arm64.tar.gz"
+        DD_TRACER: "https://artprodcus3.artifacts.visualstudio.com/A124c910c-3307-4c7f-b5dc-36cb208d4211/a51c4863-3eb4-4c5d-878a-58b41a049e4e/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2RhdGFkb2docS9wcm9qZWN0SWQvYTUxYzQ4NjMtM2ViNC00YzVkLTg3OGEtNThiNDFhMDQ5ZTRlL2J1aWxkSWQvMTU4Mzg1L2FydGlmYWN0TmFtZS8yLjUyLjAtcmVsZWFzZS1hcnRpZmFjdHM1/content?format=file&subPath=%2Fdatadog-dotnet-apm-2.52.0.tar.gz"
     ports:
       - "8080:80"
     depends_on:
       - db
       - coupon-django-api
-    platform: linux/arm64
     environment:
       ConnectionStrings__DefaultConnection: "Host=db;Database=MvcShopAppDb;Username=postgres;Password=StrongPassword123"
       CORECLR_ENABLE_PROFILING: "1"
@@ -26,7 +25,7 @@ services:
       DD_GIT_COMMIT_SHA: "f17aad6a4ddf75846e1781c37b4a1bc0f6821d01"
       DD_EXCEPTION_DEBUGGING_ENABLED: "true"
       DD_GIT_REPOSITORY_URL: "https://github.com/weihe-datadog/eShop.git"
-      DD_SERVICE: shopapp-test
+      DD_SERVICE: shopapp
       
   db:
     image: postgres
@@ -62,7 +61,6 @@ services:
       CORECLR_PROFILER_PATH: "/opt/datadog/Datadog.Trace.ClrProfiler.Native.so"
       DD_DOTNET_TRACER_HOME: "/opt/datadog"
       DD_TRACE_ENABLED: "true"
-      DD_TRACE_DEBUG: "true"
       DD_AGENT_HOST: "docker.for.mac.localhost"
       DD_DYNAMIC_INSTRUMENTATION_ENABLED: "true"
       DD_EXCEPTION_DEBUGGING_ENABLED: "true"

@@ -13,7 +13,16 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7243;http://localhost:5003",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "CORECLR_PROFILER_PATH": "C:\\dev\\dd-trace-dotnet\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "COR_PROFILER_PATH": "C:\\dev\\dd-trace-dotnet\\shared\\bin\\monitoring-home\\win-x64\\Datadog.Trace.ClrProfiler.Native.dll",
+        "COR_ENABLE_PROFILING": "1",
+        "COR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
+        "CORECLR_ENABLE_PROFILING": "1",
+        "DD_DYNAMIC_INSTRUMENTATION_ENABLED": "1",
+        "DD_EXCEPTION_DEBUGGING_ENABLED": "true",
+        "DD_DOTNET_TRACER_HOME": "C:\\dev\\dd-trace-dotnet\\shared\\bin\\monitoring-home\\",
+        "CORECLR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
+        "DD_SERVICE": "weis-demo3"
       },
       "dotnetRunMessages": true
     },
