@@ -112,7 +112,7 @@ namespace MvcShopApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CheckoutViewModel model)
+        public  IActionResult Index(CheckoutViewModel model)
         {
             Console.WriteLine("Processing checkout");
 
@@ -125,10 +125,10 @@ namespace MvcShopApp.Controllers
                     var serializedJson = JsonConvert.SerializeObject(buildApplyCouponRquest(model));
                     var content = new StringContent(serializedJson, Encoding.UTF8, "application/json");
 
-                    using var response = await _httpClient.PostAsync("http://localhost:8000/coupons/apply", content);
+                    using var response = _httpClient.PostAsync("http://localhost:8000/coupons/apply", content).Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        var responseBody = await response.Content.ReadAsStringAsync();
+                        var responseBody = response.Content.ReadAsStringAsync().Result;
                         var applyCouponResponse = JsonConvert.DeserializeObject<ApplyCouponResponse>(responseBody);
 
                         var updatedShopCartItems = applyCouponResponse.Items.Select(item => new CartItemViewModel() {
@@ -142,7 +142,7 @@ namespace MvcShopApp.Controllers
                         model.CartItems = updatedShopCartItems;
                         Console.WriteLine("Coupon applied");
                     } else {
-                        return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+                        return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
                     }
                 } 
                 // Process the checkout
