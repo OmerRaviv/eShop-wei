@@ -19,10 +19,13 @@
         "COR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
         "CORECLR_ENABLE_PROFILING": "1",
         "DD_DYNAMIC_INSTRUMENTATION_ENABLED": "1",
-        "DD_EXCEPTION_DEBUGGING_ENABLED": "true",
+        "DD_EXCEPTION_DEBUGGING_ENABLED": "false",
         "DD_DOTNET_TRACER_HOME": "C:\\dev\\dd-trace-dotnet\\shared\\bin\\monitoring-home\\",
         "CORECLR_PROFILER": "{846F5F1C-F9AE-4B07-969E-05C26BC060D8}",
-        "DD_SERVICE": "weis-demo3"
+        "DD_SERVICE": "weis-demo4",
+        "DD_VERSION": "1.0",
+        "DD_ENV": "sobregoso",
+        "DD_DYNAMIC_INSTRUMENTATION_SYMBOL_DATABASE_UPLOAD_ENABLED": "true"
       },
       "dotnetRunMessages": true
     },

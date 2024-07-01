@@ -112,7 +112,7 @@ namespace MvcShopApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CheckoutViewModel model)
+        public IActionResult Index(CheckoutViewModel model)
         {
             Console.WriteLine("Processing checkout");
 
@@ -122,15 +122,10 @@ namespace MvcShopApp.Controllers
                 {
                     Console.WriteLine("Applying coupon code");
 
-                    var serializedJson = JsonConvert.SerializeObject(buildApplyCouponRquest(model));
-                    var content = new StringContent(serializedJson, Encoding.UTF8, "application/json");
 
-                    using var response = await _httpClient.PostAsync("http://localhost:8000/coupons/apply", content);
-                    if (response.IsSuccessStatusCode)
+                    var applyCouponResponse = ApplyCoupon(model);
+                    if (applyCouponResponse != null)
                     {
-                        var responseBody = await response.Content.ReadAsStringAsync();
-                        var applyCouponResponse = JsonConvert.DeserializeObject<ApplyCouponResponse>(responseBody);
-
                         var updatedShopCartItems = applyCouponResponse.Items.Select(item => new CartItemViewModel() {
                             CatalogItemId = int.Parse(item.ProductId),
                             ProductName = item.Name,
@@ -142,7 +137,7 @@ namespace MvcShopApp.Controllers
                         model.CartItems = updatedShopCartItems;
                         Console.WriteLine("Coupon applied");
                     } else {
-                        return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+                        throw new ApplicationException("Failed to apply coupon code");
                     }
                 } 
                 // Process the checkout
@@ -156,6 +151,16 @@ namespace MvcShopApp.Controllers
 
             // If we got this far, something failed; redisplay the form
             return View(model);
+        }
+
+        private ApplyCouponResponse ApplyCoupon(CheckoutViewModel model)
+        {
+            var serializedJson = JsonConvert.SerializeObject(buildApplyCouponRquest(model));
+            var content = new StringContent(serializedJson, Encoding.UTF8, "application/json");
+            using var response = _httpClient.PostAsync("http://localhost:8000/coupons/apply", content).Result;
+            var responseBody =  response.Content.ReadAsStringAsync().Result;
+            var applyCouponResponse = JsonConvert.DeserializeObject<ApplyCouponResponse>(responseBody);
+            return applyCouponResponse;
         }
 
         public IActionResult Confirmation()
